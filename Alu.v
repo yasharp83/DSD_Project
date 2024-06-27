@@ -8,7 +8,9 @@ module Alu(
     genvar i; 
     generate
         for (i = 0 ; i < 16 ; i = i + 1) begin
-            assign {H[32*(i+1)-1:32*i] , L[32*(i+1)-1:32*i]} = mul_add ? $signed(in1[32*(i+1)-1:32*i]) + $signed(in2[32*(i+1)-1:32*i]) : $signed(in1[32*(i+1)-1:32*i]) * $signed(in2[32*(i+1)-1:32*i]) ; 
+            assign {H[32*(i+1)-1:32*i] , L[32*(i+1)-1:32*i]} = mul_add ?
+            $signed(in1[32*(i+1)-1:32*i]) + $signed(in2[32*(i+1)-1:32*i]) :
+            $signed(in1[32*(i+1)-1:32*i]) * $signed(in2[32*(i+1)-1:32*i]) ; 
         end
     endgenerate
     

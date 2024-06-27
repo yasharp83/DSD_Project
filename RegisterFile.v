@@ -1,16 +1,16 @@
 module RegisterFile(
     input clk , write ,
-    input [2:0] write_addres , 
+    input [2:0] write_address , 
     input [1023:0] write_data , 
     output [511:0] A1_out , A2_out , A3_out , A4_out 
 );
     reg [511 : 0] registers[3:0] ; 
 
     always @(posedge clk) begin
-        if (write_addres[2])
+        if (write_address[2])
             {registers[3] , registers[2]} <= write_data ; 
         else if (write)
-            registers[write_addres] <= write_data[511:0] ; 
+            registers[write_address] <= write_data[511:0] ; 
     end
 
     assign A1_out = registers[0] ; 
