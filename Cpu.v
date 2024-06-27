@@ -6,17 +6,17 @@ module Cpu(
     input [511:0] initialize_value , 
     output [511:0] A1_out , A2_out , A3_out , A4_out
 );
-    wire [2:0] write_addres ; 
+    wire [2:0] write_address ; 
     wire [1023:0] rf_write_data ; 
     wire rf_write ; 
-    assign write_addres = {instruction[1] , reg_addr} ; 
-    assign rf_write = (instruction[1:0] == 'b00) ; 
+    assign write_address = {instruction[1] , reg_addr} ; 
+    assign rf_write = (instruction[1:0] == 2'b00) ; 
     
 
     RegisterFile regFile (
         .clk(clk) , 
         .write(rf_write) , 
-        .write_addres(write_addres) , 
+        .write_address(write_address) , 
         .write_data(rf_write_data) , 
         .A1_out(A1_out) , 
         .A2_out(A2_out) , 
@@ -38,8 +38,8 @@ module Cpu(
     wire [511:0] mem_in_data , mem_out_data ; 
     assign mem_write = (instruction == 3'b001) ; //store
     assign mem_read = (instruction == 3'b000) ; //load
-    assign mem_in_data = reg_addr[1] ? (reg_addr[0] ? A3_out : A4_out) :
-                                        (reg_addr[0] ? A1_out : A2_out) ; 
+    assign mem_in_data = reg_addr[1] ? (reg_addr[0] ? A4_out : A3_out) :
+                                        (reg_addr[0] ? A2_out : A1_out) ; 
 
     memory mem (
         .clk(clk) , 
